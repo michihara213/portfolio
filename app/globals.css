@@ -1,26 +1,537 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #020617;
+  --text-main: #111827;
+  --text-muted: #374151;
+  --border-subtle: rgba(148, 163, 184, 0.35);
+  --card-radius: 16px;
+  --accent: #2563eb;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #ffffff;
+  color: #111827;
+  line-height: 1.7;
+}
+
+a {
+  color: #38bdf8;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  width: min(1120px, 100% - 32px);
+  margin: 0 auto;
+  padding: 20px 0 64px;
+}
+
+/* ===== Tabs (Top Nav) ===== */
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+  padding: 10px 0;
+}
+
+.nav-name {
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.tab-link {
+  padding-bottom: 4px;
+  color: #9aa4b2;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.tab-link:hover {
+  color: #d1d5db;
+}
+.tab-link.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ===== Common ===== */
+.page-header {
+  padding: 6px 0 18px;
+}
+.page-header h1 {
+  margin: 0 0 8px;
+  font-size: 26px;
+}
+.page-header p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.section {
+  margin-top: 28px;
+}
+
+.section h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.section-lead {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.card {
+  background: #ffffff;
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  padding: 16px 18px 18px;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+}
+
+.card h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 2px 0 10px;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 6px;
+}
+
+.tag {
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ===== Home Hero ===== */
+.hero {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 18px;
+  align-items: center;
+  padding: 10px 0 6px;
+}
+
+.avatar {
+  width: 132px;
+  height: 132px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 2px solid rgba(17, 24, 39, 0.15);
+  box-shadow: 0 6px 16px rgba(17, 24, 39, 0.10);
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 40% 20%;
+  transform: scale(1.0);
+  transform-origin: center;
+  display: block;
+}
+
+.hero-name {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.hero-meta {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.hero-one-line {
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.heroCenter {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+  padding: 24px 0 8px;
+}
+
+.heroText {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+
+.hero-roman {
+  display: block;
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ===== Timeline ===== */
+.timeline {
+  border-left: 1px solid var(--border-subtle);
+  padding-left: 16px;
+  margin-left: 4px;
+}
+
+.timeline-item {
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+}
+
+.timeline-year {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.timeline-body {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ===== Research TOC ===== */
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 0;
+}
+
+.toc a {
+  border: 1px solid var(--border-subtle);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: #fff;
+}
+
+.toc a:hover {
+  color: var(--text-main);
+  text-decoration: none;
+  border-color: rgba(37, 99, 235, 0.6);
+}
+
+/* ===== Media ===== */
+.media-block {
+  margin-top: 40px !important;
+  display: grid;
+  gap: 40px; /* ブロック間の余白（ここが言葉と動画の距離になります） */
+}
+
+.video-wrap {
+  text-align: center;
+}
+
+.video-wrap video {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: block;
+  
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(2, 6, 23, 0.65);
+}
+
+/* 1. Image Grid: 全体の枠組み */
+.image-grid {
+  display: grid;
+  
+  /* ▼▼▼ ここを変更：「1fr 1fr(等分)」をやめて、「auto auto(画像幅に合わせる)」にします ▼▼▼ */
+  grid-template-columns: auto auto; 
+  
+  /* ▼▼▼ 追加：2つの画像をカタマリとして、画面の中央に寄せます ▼▼▼ */
+  justify-content: center;
+  
+  align-items: center;
+  width: 100%;
+  
+  /* 縦の隙間 */
+  row-gap: 40px; 
+  
+  /* 横の隙間は research.ts の mediaGap (column-gap) で制御されます */
+}
+
+/* 2. Image Grid: 箱の設定（シンプルにする） */
+.image-grid > div {
+  width: auto;     /* Gridが自動調整するのでautoでOK */
+  max-width: 100%;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+/* 3. Image Grid: 画像の設定（高さ固定は維持） */
+.image-grid img {
+  height: 220px;  /* ★高さを揃える設定はそのまま */
+  width: auto;
+  
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+  
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(2, 6, 23, 0.65);
+}
+
+.mediaCaption {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 0 !important; /* キャプション下の余計な余白を削除 */
+}
+
+.mediaItem img {
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+/* 単独画像のセンター寄せ設定 */
+.single-image-wrap {
+  margin: 24px 0;
+  text-align: center;
+}
+
+.single-image-wrap img {
+  display: block;
+  margin: 0 auto; 
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+/* ===== Research Benchmarks ===== */
+.benchmarkFigure img {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+.benchmarkList {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0;
+  display: grid;
+  gap: 1px;
+}
+
+.benchmarkList li::marker {
+  content: "";
+}
+
+.benchmarkTitle {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 24px 0;
+}
+
+/* ===== Footer ===== */
+.footer {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.footer span {
+  color: var(--text-muted);
+}
+
+.card p,
+.section p {
+  color: var(--text-muted);
+}
+
+/* ===== Data Table Styles ===== */
+.table-wrapper {
+  margin-top: 40px !important;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 500px;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid var(--border-subtle);
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.data-table td:first-child,
+.data-table th:first-child {
+  text-align: left;
+  font-weight: 600;
+  background: #f8fafc;
+}
+
+.data-table th {
+  background: #f1f5f9;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.row-bold td {
+  font-weight: 700;
+  background: #fffbeb;
+  border-top: 2px solid var(--text-main);
+}
+
+.researchIntroGrid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+  align-items: start;
+  margin-top: 16px;
+}
+
+.researchIntroText p {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.researchIntroMedia {
+  display: grid;
+  gap: 14px;
+}
+
+.researchThreeViews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.researchThreeViews .view img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+}
+
+.researchThreeViews .label {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ===== Mobile Responsive (Merged) ===== */
+@media (max-width: 720px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+  }
+  
+  .nav-links {
+    gap: 18px;
+  }
+  
+  /* Image Grid - Mobile */
+  .image-grid {
+    grid-template-columns: 1fr; /* スマホでは1列にする */
+    gap: 40px; /* スマホでの隙間 */
+  }
+  
+  .image-grid > div {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    /* margin-bottomは0のままでOK（row-gapが効くため） */
+  }
+
+  .image-grid img {
+    height: auto; /* スマホでは高さ固定を解除 */
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .researchIntroGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .researchThreeViews {
+    grid-template-columns: 1fr; /* スマホでは1列（縦積み）にする */
+    gap: 32px; /* 画像ごとの隙間を少し広めに */
+  }
+}
+
+html {
+  /* これを追加するだけ */
+  scroll-behavior: smooth;
 }
