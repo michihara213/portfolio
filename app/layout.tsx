@@ -26,7 +26,7 @@ export default function RootLayout({
             <span> / </span>
             {/* TODO: 自分のGitHubに変更 */}
             <a
-              href="https://github.com/your-github-id"
+              href="https://github.com/michihara213"
               target="_blank"
               rel="noopener noreferrer"
             >

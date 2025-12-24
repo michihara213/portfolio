@@ -63,7 +63,7 @@ export default function ResearchPage() {
                 textAlign: "left",
               }}
             >
-              ▼ 取得対象となる基本3断面（左端が本研究の対象）
+              ▼ 取得対象となる基本3断面（★印が本研究の対象）
             </p>
 
             <div 
@@ -155,8 +155,7 @@ export default function ResearchPage() {
           <h3>6つのベンチマーク</h3>
 
           <p style={{ margin: "0 0 40px", fontSize: 14 }}>
-            私が所属する研究班では、左室長軸断面に対して、画像品質を評価するためのベンチマークを6つ定義しました。
-            まずは全体像を図と文章で説明します。
+            私が所属する研究班では、医師との相談の上、左室長軸断面に対して画像品質を評価するためのベンチマークを6つ定義しました。
           </p>
 
           <div className="mediaItem benchmarkFigure" style={{ marginTop: 10 }}>
@@ -199,6 +198,7 @@ export default function ResearchPage() {
           media={topic.media}
           tableData={topic.tableData}
           mediaGap={topic.mediaGap}
+          githubUrl={topic.githubUrl}
         />
       ))}
 

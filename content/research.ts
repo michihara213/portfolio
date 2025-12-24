@@ -8,7 +8,7 @@ export const researchIntro: string[] = [
   "一方で、ロボットが取得した断面が診断に適した品質かどうかの判断は、依然として熟練者の目視確認や採点に依存しており、完全自動化や社会実装に向けたボトルネックになっています。\n心疾患の診断に重要な基本3断面（傍胸骨左室長軸断面／傍胸骨左室長軸断面／心尖部四腔断面）を安定して取得するためには、画像品質を自動で評価できる仕組みが不可欠です。",
 
   // 3段落目：本研究の目的（PLAXの自動評価）
-  "そこで本プロジェクトでは、基本断面の一つである傍胸骨左室長軸断面（PLAX）に着目し、画像品質を自動かつ定量的に評価するアルゴリズムの設計・構築に取り組みました。\n解剖学的ランドマークの見え方に基づく評価指標（ベンチマーク）を定義し、取得画像の品質管理とフィードバックに繋がる基盤を目指しています。",
+  "そこで、先輩の修士論文研究に協力し、基本断面の一つである傍胸骨左室長軸断面（PLAX）を対象とした、画像品質を自動かつ定量的に評価するアルゴリズムの設計・構築に取り組みました。\n解剖学的な特徴に基づくベンチマークを定義し、それに基づいて画像品質を定量的に評価しました。",
 ];
 
 export const researchIntroMedia = {
@@ -59,6 +59,7 @@ export type ResearchTopic = {
   tags?: string[];
   description: (string | { title: string; body: string })[];
   media?: MediaItem[];
+  githubUrl?: string;
   // 表データ用
   tableData?: {
     headers: string[];
@@ -75,16 +76,37 @@ export const researchTopics: ResearchTopic[] = [
     benchmark: "① 左心室が視認可能",
     tags: ["Python", "OpenCV", "echo-plax-segmentation"],
     description: [
-      "GitHubリポジトリ「echo-plax-segmentation」に含まれる学習済みモデルを用いて左心室領域を抽出し、フレームごとに左心室の視認性を評価しました。",
-      "マスクの面積・位置・形状の安定性などを指標化し、品質判定に繋げています。",
+      "左心室領域が存在するかを判断するためのベンチマークです。",
+      "本ベンチマークに対しては、GitHubリポジトリ「echo-plax-segmentation」による解析と、OpenCVによる画像処理を組み合わせた自動判定の手法を検討しました。",
+      "具体的な処理フローは以下の通りです。",
+      {
+        title: "1. AIによる左心室領域の検出：",
+        body: "「echo-plax-segmentation」内の学習済みモデルを使用し、エコー動画から左心室のマスク領域を抽出。",
+      },
+      {
+        title: "2. 内部領域の定義：",
+        body: "解析対象を扇形領域に限定した上で、平滑化・二値化・輪郭抽出を順次適用。\n得られた点群に対し2次関数フィッティングを行うことで左心室後壁の曲線を特定し、その内部領域を動的に定義。",
+      },
+      {
+        title: "3. 画素数比率による判定：",
+        body: "「AI検出領域」と「幾何学的内部領域」それぞれの画素数を算出し、その比率が閾値を超えた場合に『検出』、それ以外の場合に『未検出』と判定。",
+      },
+      "なお、判定の閾値については、複数のサンプル動画における比率の変動を確認し、最適な値を実験的に決定しました。",
     ],
+    mediaGap: "20px", // 2枚並びの標準的な隙間
+    githubUrl: "https://github.com/michihara213",
     media: [
-      { kind: "video", src: "/research/lv_detect.mp4", caption: "左心室領域の抽出例（動画）" },
       {
         kind: "image",
-        src: "/research/lv_detect.png",
-        alt: "左心室検出の例（画像）",
-        caption: "セグメンテーション結果の例（画像）",
+        src: "/research/lv_ai_mask.jpg",
+        alt: "AIモデルによる検出結果", // ← ここはOK
+        caption: "AIモデルによる領域抽出（左心室：青色領域）",
+      },
+      {
+        kind: "image",
+        src: "/research/lv_geometric.jpg",
+        alt: "幾何学的処理の結果",      // ★これ（alt）を追加してください！
+        caption: "幾何学的処理による内部領域の定義",
       },
     ],
   },
@@ -94,28 +116,29 @@ export const researchTopics: ResearchTopic[] = [
     benchmark: "② 左心室が開ループ（/ 閉ループ判定）",
     tags: ["Python", "OpenCV"],
     description: [
-      "左心室の左側の領域が開いているか、閉じているかを判断するためのベンチマークです。",
+      "左心室の左側の領域が閉じていないかを判断するためのベンチマークです。",
       "本ベンチマークに対しては、OpenCVを用いた自動判定の手法を検討しました。",
       "具体的な処理フローは以下の通りです。",
       {
-        title: "1. 扇形マスクによるROI抽出：",
-        body: "解析対象を扇形領域に限定することで、計算コストを削減しつつ背景ノイズを除外。"
+        title: "1. 解析領域の限定：",
+        body: "扇形マスクを作成し、解析対象を扇形領域に限定することで、黒背景やUIなどの超音波プローブの走査領域以外を除去する。"
       },
       {
         title: "2. 前処理（ノイズ除去）：",
-        body: "平滑化・二値化・モルフォロジー演算（クロージング）を順次適用し、超音波画像特有の途切れやノイズを整形。"
+        body: "平滑化・二値化・クロージング処理を順次適用し、超音波画像特有の途切れやノイズを整形。"
       },
       {
-        title: "3. 輪郭階層を用いた判定：",
-        body: "輪郭抽出（findContours）の階層構造（Hierarchy）を利用。「階層深さが1（最外郭の内部）」かつ「面積が一定以上」の輪郭が存在する場合のみ『閉ループ』と判定。"
+        title: "3. 輪郭階層・画素数による判定：",
+        body: "輪郭抽出の階層構造を利用し、「階層深さが1」かつ「画素数が閾値以上」の輪郭が存在する場合に『閉ループ』、それ以外の場合に『開ループ』と判定。"
       },
-      "ORIZURUで取得した6つの動画（各300フレーム、計1800枚）に対し、混合行列を用いた定量的な精度評価を行いました。",
+      "上記処理フローに基づき、ORIZURUで取得した6つの動画（各300フレーム、計1800枚）に対し、混同行列を用いた定量的な精度評価を行いました。",
       "その結果、Average F1-score 0.912、Accuracy 0.925を達成し、本手法の有効性を確認しました。"
       //"前処理（平滑化・二値化・クロージング等）→輪郭抽出→階層情報・面積閾値などを用いて開/閉ループを判定する手法を検討しました。",
       //"以下に、判定基準となる「開ループ」「閉ループ」の定義と、実際の判定動画、および精度評価の結果を示します。",
     ],
     // ★ここで隙間を調整 ("10px", "40px", "3rem" など)
     mediaGap: "20px",
+    githubUrl: "https://github.com/michihara213/EchoAnalysisProject/tree/main/loop_analysis",
     media: [
       {
         kind: "image",
@@ -154,8 +177,10 @@ export const researchTopics: ResearchTopic[] = [
     benchmark: "④ 大動脈弁の検出",
     tags: ["Python", "Docker", "CVAT", "YOLOv8"],
     description: [
-      "CVATでアノテーションしたデータを用いて、YOLOv8により大動脈弁（AoV）の検出を行いました。",
-      "以下に、学習データの作成に使用したCVAT画面（「弁なし」「開」「閉」の定義）と、検出結果の動画を示します。",
+      "大動脈弁が存在するかを判断するためのベンチマークです。",
+      "本ベンチマークに対しては、CVATでアノテーションしたデータを用いて、YOLOv8により大動脈弁の検出・分類を行いました。",
+      "3つのクラス（AV_upside、AV_downside、AV_closed）を定義し、合計約2万枚（うち私の担当分は2000枚）の画像をtrain / validation / test = 7 : 2 : 1 に分割して学習・評価しました。\n学習条件はエポック数100、バッチサイズ16です。",
+      "以下に、学習データの作成に使用したCVAT画面の例と、テストデータに対する精度評価結果を示します。",
     ],
     // ★ここで隙間を調整
     mediaGap: "20px",
@@ -185,7 +210,7 @@ export const researchTopics: ResearchTopic[] = [
         kind: "image",
         src: "/research/aov_open_cvat.png",
         alt: "大動脈弁開CVAT",
-        caption: "CVAT作業画面（青：上、赤：下）",
+        caption: "CVAT作業画面（青：AV_upside、赤：AV_downside）",
       },
 
       // 3. 閉じている
@@ -199,16 +224,21 @@ export const researchTopics: ResearchTopic[] = [
         kind: "image",
         src: "/research/aov_close_cvat.png",
         alt: "大動脈弁閉CVAT",
-        caption: "CVAT作業画面（緑：閉）",
+        caption: "CVAT作業画面（緑：AV_closed）",
       },
-
-      // 4. 最後に検出結果の動画
-      {
-        kind: "video",
-        src: "/research/aov_detect.mp4",
-        caption: "大動脈弁検出の例（動画）",
-      },
+      // ★動画（aov_detect.mp4）を削除しました
     ],
+    // ★ここに追加：画像のログに基づいたテーブルデータ
+    tableData: {
+      headers: ["Class", "Images", "Precision", "Recall", "mAP50", "mAP50-95"],
+      rows: [
+        ["AV_upside", "773", "0.746", "0.688", "0.722", "0.340"],
+        ["AV_downside", "727", "0.759", "0.717", "0.752", "0.352"],
+        ["AV_closed", "850", "0.892", "0.887", "0.923", "0.623"],
+        // "Average" という名前にしておくと、ProjectSectionの仕様で自動的に太字になります
+        ["Average", "2318", "0.799", "0.764", "0.799", "0.438"],
+      ],
+    },
   },
   {
     id: "mv-chord",
@@ -216,45 +246,51 @@ export const researchTopics: ResearchTopic[] = [
     benchmark: "⑥ 僧帽弁の先端と腱索/乳頭筋の繋がり評価",
     tags: ["Python", "OpenCV", "YOLOv8"],
     description: [
-      // ▼▼▼ 修正箇所：コードの内容に基づいて詳細化 ▼▼▼
-      "僧帽弁の先端が、腱索や乳頭筋と重なっていないか（分離しているか）を評価するためのベンチマークです。",
-      "本項目では、YOLOv8による物体検出と、OpenCVによる画像処理を組み合わせたハイブリッドな判定手法を実装しました。",
+      "僧帽弁の先端が、腱索や乳頭筋と繋がっていないかを評価するためのベンチマークです。",
+      "本ベンチマークに対しては、腱索・乳頭筋のうち腱索に限定し、YOLOv8による物体検出と、OpenCVによる画像処理を組み合わせた自動判定の手法を検討しました。",
       "具体的な処理フローは以下の通りです。",
       {
-        title: "1. ROIの動的定義：",
-        body: "YOLOv8で検出した「僧帽弁」の領域情報を利用し、その左下方向に探索範囲を拡張することで「腱索エリア」のROI（関心領域）を動的に定義。"
+        title: "1. 解析領域の動的定義：",
+        body: "YOLOv8で検出した「僧帽弁」のバウンディングボックスを基準に、その左側の方向に探索範囲を拡張することで、腱索を評価するための解析領域を動的に定義。",
       },
       {
-        title: "2. 前処理（構造抽出）：",
-        body: "各ROIに対し、ノイズ除去（低輝度ピクセルのカット）・ガウシアンフィルタ・二値化を順次適用。超音波画像特有のスペックルノイズを低減し、構造物のみを強調。"
+        title: "2. 前処理（ノイズ除去）：",
+        body: "各解析領域に対し、ノイズ除去・平滑化・二値化を順次適用し、超音波画像特有の途切れやノイズを整形。",
       },
       {
         title: "3. 輝度比率による判定：",
-        body: "「僧帽弁」と「腱索」それぞれの画素面積（輝度総和）を算出。その比率（腱索 / 僧帽弁）が一定の閾値を超えた場合のみ『繋がりあり』と判定。"
+        body: "「僧帽弁」と「腱索」それぞれの輝度の総和を算出し、その比率が閾値を超えた場合に『繋がりあり』、それ以外の場合に『繋がりなし』と判定。",
       },
-      "検証用データセットを用いた定量評価の結果、F1-score 0.964、Accuracy 0.973を達成し、高精度な判定が可能であることを確認しました。",
-      // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+      "上記処理フローに基づき、検証用データセットに対し、混同行列を用いた定量的な精度評価を行いました。",
+      "その結果、F1-score 0.964、Accuracy 0.973を達成し、本手法の有効性を確認しました。"
     ],
     mediaGap: "20px",
+    githubUrl: "https://github.com/michihara213/EchoAnalysisProject/tree/main/chord_analysis",
     media: [
+      // 変更点: 動画を削除し、元画像を先頭に追加
       {
         kind: "image",
-        src: "/research/chord_org.jpg",
-        alt: "判定元画像",
-        caption: "元画像",
+        src: "/research/chord_org.jpg", // ★元画像 (public/research/ に配置してください)
+        alt: "判定前の元画像",
+        caption: "判定前の元画像",
+      },
+      // 既存の2枚
+      {
+        kind: "image",
+        src: "/research/chord_none.jpg",
+        alt: "判定結果: None",
+        caption: "Chord: None (繋がりなし)",
       },
       {
         kind: "image",
-        src: "/research/chord_pred.jpg",
-        alt: "判定結果",
-        caption: "判定結果",
+        src: "/research/chord_connected.jpg",
+        alt: "判定結果: Connected",
+        caption: "Chord: Connected (繋がりあり)",
       },
     ],
     tableData: {
       headers: ["Target", "Precision", "Recall", "F1-score", "Accuracy"],
-      rows: [
-        ["Validation Set", "0.985", "0.944", "0.964", "0.973"],
-      ],
+      rows: [["Validation Set", "0.985", "0.944", "0.964", "0.973"]],
     },
   },
 ];

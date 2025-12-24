@@ -490,6 +490,129 @@ a:hover {
   text-align: center;
 }
 
+.image-grid > div:first-child:nth-last-child(3) {
+  grid-column: 1 / -1;     /* 横幅いっぱいにエリア確保 */
+  width: 100%;             /* エリア幅100% */
+  display: flex;           /* Flexboxで配置制御 */
+  flex-direction: column;  /* 縦並び（画像→文字） */
+  align-items: center;     /* 中央寄せ */
+  
+  /* 上の1枚と、下の2枚の間の「縦の隙間」 */
+  margin-bottom: 0;     
+}
+
+/* 2. 画像自体の設定 */
+/* 前回入れていた「max-width: 70%」を削除し、標準のサイズ設定（.image-grid img）をそのまま使う */
+.image-grid > div:first-child:nth-last-child(3) img {
+  /* ここには何も書かない、あるいは以下のようにリセット */
+  max-width: 100%; 
+  width: auto;     /* 高さは標準設定(220px等)に従い、幅はなりゆき */
+  margin: 0;
+}
+
+/* 3. キャプションの設定 */
+.image-grid > div:first-child:nth-last-child(3) .mediaCaption {
+  margin-top: 8px;
+}
+
+html {
+  /* これを追加するだけ */
+  scroll-behavior: smooth;
+}
+
+.github-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: #24292f; /* GitHub Black */
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+  flex-shrink: 0;
+}
+
+.github-button:hover {
+  opacity: 0.85;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.github-button:active {
+  transform: scale(0.97);
+}
+
+.other-page .media-block {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 40px !important;
+  margin-top: 40px !important;
+}
+
+/* 2. 各メディアの枠（余白リセット） */
+.other-page .single-image-wrap,
+.other-page .video-wrap {
+  width: 100% !important;
+  margin: 0 !important;
+  text-align: center;
+}
+
+/* ★修正点: ここにあった .mediaCaption の専用設定を削除しました */
+/* これにより、Research projectと同じ共通設定（margin-top: 8px）が適用されます */
+
+
+/* ===== プロジェクトごとの個別サイズ調整 ===== */
+
+/* 【A】夏課題ゲーム (#summer-game) */
+#summer-game .video-wrap video {
+  max-width: 600px !important;
+  width: 100% !important;
+  height: auto !important;
+  
+  /* inline-blockだと下に謎の隙間が空くので block に変更 */
+  display: block; 
+  margin: 0 auto; /* 中央寄せ */
+  
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #000;
+}
+
+/* 【B】ロボコン (#lab-robocon) */
+/* 1. CAD画像（横長） */
+#lab-robocon .single-image-wrap img {
+  max-width: 100% !important;
+  max-height: 400px !important;
+  width: auto !important;
+  height: auto !important;
+  
+  display: block; /* blockに変更 */
+  margin: 0 auto;
+  
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* 2. 実機動画（縦長） */
+#lab-robocon .video-wrap video {
+  max-width: 320px !important;
+  width: 100% !important;
+  height: auto !important;
+  
+  display: block; /* blockに変更 */
+  margin: 0 auto;
+  
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #000;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
 /* ===== Mobile Responsive (Merged) ===== */
 @media (max-width: 720px) {
   .hero {
@@ -529,9 +652,4 @@ a:hover {
     grid-template-columns: 1fr; /* スマホでは1列（縦積み）にする */
     gap: 32px; /* 画像ごとの隙間を少し広めに */
   }
-}
-
-html {
-  /* これを追加するだけ */
-  scroll-behavior: smooth;
 }
