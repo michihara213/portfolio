@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "../contexts/LanguageContext"; // ★追加
 
 export function NavTabs() {
   const pathname = usePathname();
+  const { language, setLanguage } = useLanguage(); // ★言語情報を取得
 
   const links = [
     { href: "/", label: "Home" },
@@ -14,7 +16,24 @@ export function NavTabs() {
 
   return (
     <nav className="tabs">
-      <div className="nav-name">MICHIYO NISHIMURA</div>
+      {/* ▼▼▼ ここを変更 ▼▼▼ */}
+      <div className="lang-switch">
+        <button 
+          onClick={() => setLanguage("ja")} 
+          className={language === "ja" ? "active" : ""}
+        >
+          JP
+        </button>
+        <span className="divider">/</span>
+        <button 
+          onClick={() => setLanguage("en")} 
+          className={language === "en" ? "active" : ""}
+        >
+          EN
+        </button>
+      </div>
+      {/* ▲▲▲ ここまで ▲▲▲ */}
+
       <div className="nav-links">
         {links.map((link) => {
           const active =

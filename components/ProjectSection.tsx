@@ -11,9 +11,10 @@ type ProjectSectionProps = {
   tableData?: {
     headers: string[];
     rows: string[][];
+    caption?: string; // ★ここを追加：captionを受け取れるようにする
   };
   mediaGap?: string;
-  githubUrl?: string; // ★追加
+  githubUrl?: string;
 };
 
 export function ProjectSection({
@@ -25,12 +26,12 @@ export function ProjectSection({
   media,
   tableData,
   mediaGap,
-  githubUrl, // ★追加
+  githubUrl,
 }: ProjectSectionProps) {
   return (
     <section className="section" id={id}>
       <div className="card">
-        {/* タイトルとGitHubボタンを横並びにするレイアウトに変更 */}
+        {/* タイトルとGitHubボタンを横並びにするレイアウト */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
           <div>
             <h3>{title}</h3>
@@ -65,10 +66,8 @@ export function ProjectSection({
           </div>
         ) : null}
         
-        {/* ...以下、既存のコードと同じ... */}
         <div style={{ marginTop: 16, marginBottom: 16 }}>
           {description.map((item, i) => {
-            // ...省略（変更なし）...
             if (typeof item === "string") {
               return (
                 <p key={i} style={{ margin: "10px 0", fontSize: 14, whiteSpace: "pre-wrap" }}>
@@ -76,7 +75,6 @@ export function ProjectSection({
                 </p>
               );
             } else {
-              // ...省略（変更なし）...
               const match = item.title.match(/^(\d+\.)\s*(.*)$/);
               if (!match) {
                  return (
@@ -138,7 +136,11 @@ export function ProjectSection({
                 })}
               </tbody>
             </table>
-            <div className="mediaCaption">混合行列に基づく精度評価結果</div>
+            
+            {/* ★ここを修正: データにcaptionがあれば表示する形に変更 */}
+            {tableData.caption && (
+              <div className="mediaCaption">{tableData.caption}</div>
+            )}
           </div>
         ) : null}
       </div>

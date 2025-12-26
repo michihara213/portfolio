@@ -1,14 +1,15 @@
+"use client";
+
 import { ProjectSection } from "../../components/ProjectSection";
-import { ScrollToToc } from "../../components/ScrollToToc"; // ★追加
-import {
-  researchIntro,
-  researchIntroMedia,
-  researchTopics,
-  benchmarkFigure,
-  benchmarkItems,
-} from "../../content/research";
+import { ScrollToToc } from "../../components/ScrollToToc";
+import { researchData } from "../../content/research";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 export default function ResearchPage() {
+  const { language } = useLanguage();
+  // 現在の言語のデータを取得
+  const content = researchData[language];
+
   return (
     <main style={{ position: "relative" }}>
       <header className="page-header">
@@ -16,7 +17,7 @@ export default function ResearchPage() {
 
         {/* 1. 文章（縦積み） */}
         <div style={{ marginTop: "16px", marginBottom: "32px" }}>
-          {researchIntro.map((text, i) => (
+          {content.intro.map((text, i) => (
             <p
               key={i}
               style={{
@@ -35,8 +36,8 @@ export default function ResearchPage() {
         {/* 2. ORIZURU画像 */}
         <div style={{ marginBottom: "40px", textAlign: "center" }}>
           <img
-            src={researchIntroMedia.orizuru.src}
-            alt={researchIntroMedia.orizuru.alt}
+            src={content.introMedia.orizuru.src}
+            alt={content.introMedia.orizuru.alt}
             style={{
               height: "220px",
               width: "auto",
@@ -48,7 +49,7 @@ export default function ResearchPage() {
             }}
           />
           <div className="mediaCaption">
-            {researchIntroMedia.orizuru.caption}
+            {content.introMedia.orizuru.caption}
           </div>
         </div>
 
@@ -63,7 +64,9 @@ export default function ResearchPage() {
                 textAlign: "left",
               }}
             >
-              ▼ 取得対象となる基本3断面（★印が本研究の対象）
+              {language === "ja" 
+                ? "▼ 取得対象となる基本3断面（★印が本研究の対象）"
+                : "▼ The 3 basic views to be acquired (★ marks the target of this research)"}
             </p>
 
             <div 
@@ -75,7 +78,7 @@ export default function ResearchPage() {
                 justifyContent: "center" 
               }}
             >
-              {researchIntroMedia.threeViews.map((view, i) => {
+              {content.introMedia.threeViews.map((view, i) => {
                 const isTarget = i === 0;
                 return (
                   <div key={i} className="view">
@@ -120,11 +123,15 @@ export default function ResearchPage() {
           id="toc" 
           style={{ 
             margin: "0 auto 40px", 
-            padding: "32px 24px", 
+            // 左右の余白を少し広めに確保
+            padding: "32px 40px", 
             background: "#f8fafc", 
             borderRadius: "16px",
             border: "1px solid var(--border-subtle)",
-            maxWidth: "800px"
+            
+            // ▼▼▼ 中身に合わせて伸縮する設定 (fit-content) ▼▼▼
+            width: "fit-content",
+            maxWidth: "100%", // 画面幅を超えないようにする安全策
           }}
         >
           <div style={{ 
@@ -135,12 +142,14 @@ export default function ResearchPage() {
             fontSize: "14px",
             letterSpacing: "0.05em"
           }}>
-            — INDEX: プロジェクト詳細 —
+            {language === "ja" ? "— INDEX: プロジェクト詳細 —" : "— INDEX: Project Details —"}
           </div>
           
-          <div className="toc" style={{ justifyContent: "center" }}>
-            <a href="#benchmarks" style={{ fontWeight: 600 }}>概要：6つのベンチマーク</a>
-            {researchTopics.map((t) => (
+          <div className="toc" style={{ justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="#benchmarks" style={{ fontWeight: 600 }}>
+              {language === "ja" ? "概要：6つのベンチマーク" : "Overview: 6 Benchmarks"}
+            </a>
+            {content.topics.map((t) => (
               <a key={t.id} href={`#${t.id}`}>
                 {t.title}
               </a>
@@ -152,21 +161,23 @@ export default function ResearchPage() {
       {/* ① まず6ベンチマークを図で説明 */}
       <section className="section" id="benchmarks">
         <div className="card">
-          <h3>6つのベンチマーク</h3>
+          <h3>{language === "ja" ? "6つのベンチマーク" : "6 Benchmarks"}</h3>
 
           <p style={{ margin: "0 0 40px", fontSize: 14 }}>
-            私が所属する研究班では、医師との相談の上、左室長軸断面に対して画像品質を評価するためのベンチマークを6つ定義しました。
+            {language === "ja" 
+             ? "私が所属する研究班では、医師との相談の上、左室長軸断面に対して画像品質を評価するためのベンチマークを6つ定義しました。"
+             : "In consultation with doctors, my research group defined 6 benchmarks for evaluating image quality for the Parasternal Long-Axis View."}
           </p>
 
           <div className="mediaItem benchmarkFigure" style={{ marginTop: 10 }}>
-            <img src={benchmarkFigure.src} alt={benchmarkFigure.alt} />
-            <div className="mediaCaption">{benchmarkFigure.caption}</div>
+            <img src={content.benchmarkFigure.src} alt={content.benchmarkFigure.alt} />
+            <div className="mediaCaption">{content.benchmarkFigure.caption}</div>
           </div>
 
           <div className="divider" />
 
           <ul className="benchmarkList">
-            {benchmarkItems.map((b) => (
+            {content.benchmarkItems.map((b) => (
               <li key={b.id}>
                 <span className="benchmarkTitle">{b.title}</span>
                 {b.note ? <span className="muted"> — {b.note}</span> : null}
@@ -177,16 +188,15 @@ export default function ResearchPage() {
           <div className="divider" />
 
           <p style={{ margin: 0, fontSize: 14 }}>
-            このうち私は、①②④⑥（左心室検出／開閉ループ判定／大動脈弁検出／僧帽弁と腱索の繋がり検出）に取り組みました。
-            以下で各項目を、動画・画像を交えて紹介します。
+            {language === "ja" 
+             ? "このうち私は、①②④⑥（左心室検出／開閉ループ判定／大動脈弁検出／僧帽弁と腱索の繋がり検出）に取り組みました。以下で各項目を、動画・画像を交えて紹介します。"
+             : "Of these, I worked on 1, 2, 4, and 6 (LV Detection / Loop Judgment / AV Detection / Chordae Connection). I will introduce each item below with videos and images."}
           </p>
-
-          {/* ★削除済み：ここに書いていた静的な「↑ 目次に戻る」リンクを消しました */}
         </div>
       </section>
 
       {/* ③ 自分の4項目 */}
-      {researchTopics.map((topic) => (
+      {content.topics.map((topic) => (
         <ProjectSection
           key={topic.id}
           id={topic.id}
@@ -202,9 +212,7 @@ export default function ResearchPage() {
         />
       ))}
 
-      {/* ▼▼▼ 追加：フローティングボタン ▼▼▼ */}
       <ScrollToToc />
-      {/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */}
     </main>
   );
 }

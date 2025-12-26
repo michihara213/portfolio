@@ -80,6 +80,42 @@ a:hover {
   border-bottom-color: var(--accent);
 }
 
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.lang-switch button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.lang-switch button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.lang-switch button.active {
+  background: var(--text-main); /* 黒背景 */
+  color: #ffffff;               /* 白文字 */
+}
+
+.lang-switch .divider {
+  opacity: 0.8;
+  position: relative;
+  top: -13px;       /* 1pxだけ上に持ち上げる */
+  font-size: 15px; /* 少しだけ小さくすると馴染みやすいです */
+}
+
 /* ===== Common ===== */
 .page-header {
   padding: 6px 0 18px;

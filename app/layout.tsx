@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { NavTabs } from "../components/NavTabs";
+import { LanguageProvider } from "../contexts/LanguageContext"; // ★これが必要です
 
 export const metadata: Metadata = {
   title: "Michiyo Nishimura – Portfolio",
-  description:
-    "西村路世（早稲田大学 創造理工学部 総合機械工学科）のポートフォリオ。Research / Other Projects を掲載。",
+  description: "Portfolio of Michiyo Nishimura",
 };
 
 export default function RootLayout({
@@ -16,24 +16,27 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <div className="container">
-          <NavTabs />
-          {children}
-          <footer className="footer">
-            <span>Contact:</span>{" "}
-            {/* TODO: 自分のメールに変更 */}
-            <a href="mailto:def1203@icloud.com">def1203@icloud.com</a>
-            <span> / </span>
-            {/* TODO: 自分のGitHubに変更 */}
-            <a
-              href="https://github.com/michihara213"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          </footer>
-        </div>
+        {/* ▼▼▼ この Provider で囲むのが必須です ▼▼▼ */}
+        <LanguageProvider>
+          <div className="container">
+            <NavTabs />
+            {children}
+            <footer className="footer">
+              <span>Contact:</span>{" "}
+              {/* 自分のメールアドレス等 */}
+              <a href="mailto:def1203@icloud.com">def1203@icloud.com</a>
+              <span> / </span>
+              <a
+                href="https://github.com/michihara213"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+            </footer>
+          </div>
+        </LanguageProvider>
+        {/* ▲▲▲ ここまで ▲▲▲ */}
       </body>
     </html>
   );

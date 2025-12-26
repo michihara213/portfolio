@@ -1,23 +1,34 @@
+"use client"; // ★Hooksを使うので必須
+
 import { Hero } from "../components/Hero";
 import { Timeline } from "../components/Timeline";
-import { career } from "../content/career";
+import { careerData } from "../content/career"; // ★更新したデータをインポート
+import { profileData } from "../content/profile"; // ★新規データをインポート
+import { useLanguage } from "../contexts/LanguageContext"; // ★言語フック
 
 export default function HomePage() {
+  const { language } = useLanguage(); // 現在の言語を取得 ("ja" or "en")
+
   return (
     <main>
       <Hero
-        nameJa="西村 路世"
-        nameRoman="Michiyo Nishimura"
-        affiliation="早稲田大学 創造理工学部 総合機械工学科 3年  (通算GPA 3.60 / 4.00)"
-        //oneLine="機械学習 × ゲーム開発で、動くものをつくる"
-        photoSrc="id-photo.jpg"
+        nameJa={profileData.nameJa}
+        nameRoman={profileData.nameRoman}
+        // ▼ 言語によってテキストを切り替え
+        affiliation={profileData.affiliation[language]}
+        photoSrc={profileData.photoSrc}
       />
-
 
       <section className="section">
         <h2>Career</h2>
-        <p className="section-lead">高校卒業から現在までの主な経歴。</p>
-        <Timeline items={career} />
+        <p className="section-lead">
+          {language === "ja" 
+            ? "高校卒業から現在までの主な経歴。"
+            : "My academic and professional background."}
+        </p>
+        
+        {/* ▼ 言語ごとの配列を渡す */}
+        <Timeline items={careerData[language]} />
       </section>
     </main>
   );
