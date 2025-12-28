@@ -241,7 +241,7 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
             ["AV_closed", "850", "0.892", "0.887", "0.923", "0.623"],
             ["Average", "2318", "0.799", "0.764", "0.799", "0.438"],
           ],
-          caption: "混同行列に基づく精度評価結果"
+          caption: "テストデータに対する精度評価結果"
         },
       },
       // ▼▼▼ 前回の修正: mv-chord -> mv-chordae ▼▼▼
@@ -252,7 +252,7 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
         tags: ["Python", "OpenCV", "YOLOv8"],
         description: [
           "僧帽弁の先端が、腱索や乳頭筋と繋がっていないかを評価するためのベンチマークです。",
-          "本ベンチマークに対しては、腱索・乳頭筋のうち腱索に限定し、YOLOv8による物体検出と、OpenCVによる画像処理を組み合わせた自動判定の手法を検討しました。",
+          "本ベンチマークに対しては、腱索・乳頭筋のうち腱索に限定し、学習済みのYOLOv8による物体検出と、OpenCVによる画像処理を組み合わせた自動判定の手法を検討しました。",
           "具体的な処理フローは以下の通りです。",
           {
             title: "1. 解析領域の動的定義：",
@@ -511,7 +511,7 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
             ["AV_closed", "850", "0.892", "0.887", "0.923", "0.623"],
             ["Average", "2318", "0.799", "0.764", "0.799", "0.438"],
           ],
-          caption: "Accuracy evaluation results based on the confusion matrix"
+          caption: "Accuracy evaluation results on test data"
         },
       },
       // ▼▼▼ 前回の修正: mv-chord -> mv-chordae ▼▼▼
@@ -522,7 +522,7 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
         tags: ["Python", "OpenCV", "YOLOv8"],
         description: [
           "Benchmark to evaluate if the tip of the Mitral Valve (MV) is not connected to chordae tendineae or papillary muscles.",
-          "I focused on chordae tendineae and examined an automatic determination method combining object detection by YOLOv8 and image processing by OpenCV.",
+          "I focused on chordae tendineae and examined an automatic determination method combining object detection by pre-trained YOLOv8 and image processing by OpenCV.",
           "The processing flow is as follows:",
           {
             title: "1. Dynamic Definition of Analysis Area:",

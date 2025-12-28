@@ -23,7 +23,7 @@ export const otherProjectsData = {
         "以下に、受賞時の様子と制作物の外観を掲載します。",
       ],
       mediaGap: "20px",
-      githubUrl: "https://github.com/michihara213",
+      githubUrl: "https://github.com/michihara213/OtherProject/tree/main/MechatroLab",
       media: [
         { 
           kind: "image", 
@@ -56,7 +56,7 @@ export const otherProjectsData = {
         "以下に実際のプレイ動画を掲載します。",
       ],
       mediaGap: "0px", 
-      githubUrl: "https://github.com/michihara213",
+      githubUrl: "https://github.com/michihara213/OtherProject/tree/main/WesternGame",
       media: [
         {
           kind: "video",
@@ -73,11 +73,11 @@ export const otherProjectsData = {
       description: [
         "所属する研究室の学部3年生（11名）が4チームに分かれ、オリジナルのロボットを製作して競い合うロボコンに取り組んでいます。",
         "競技は、攻撃側と防御側で各1機のロボットを製作し、制限時間内にピンポン玉をフィールド上のゴールへ投げ入れて得点を競う形式です。",
-        "私はチーム内で攻撃用ロボットの設計・製作を担当しました。\nAutodesk Inventor Professionalを用いて3Dモデルを作成し、干渉チェックやサイズ制限に注意しながらカタパルト機構の実装を行いました。",
+        "私はチーム内で攻撃用ロボットの設計・製作を担当しています。\nAutodesk Inventor Professionalを用いて3Dモデルを作成し、干渉チェックやサイズ制限に注意しながらカタパルト機構の実装を行いました。",
         "以下に、設計時のCADモデルと、実際に動作しているロボットの様子を掲載します。",
       ],
       mediaGap: "20px",
-      githubUrl: "https://github.com/michihara213",
+      githubUrl: "https://github.com/michihara213/OtherProject/tree/main/Robocon",
       media: [
         {
           kind: "image",
@@ -107,7 +107,7 @@ export const otherProjectsData = {
         "Below are photos of the award ceremony and the device.",
       ],
       mediaGap: "20px",
-      githubUrl: "https://github.com/michihara213",
+      githubUrl: "https://github.com/michihara213/OtherProject/tree/main/MechatroLab",
       media: [
         { 
           kind: "image", 
@@ -140,7 +140,7 @@ export const otherProjectsData = {
         "Below is a gameplay video.",
       ],
       mediaGap: "0px", 
-      githubUrl: "https://github.com/michihara213",
+      githubUrl: "https://github.com/michihara213/OtherProject/tree/main/WesternGame",
       media: [
         {
           kind: "video",
@@ -157,11 +157,11 @@ export const otherProjectsData = {
       description: [
         "The 3rd-year students in my laboratory (11 members) are divided into 4 teams to build original robots and compete in a Robocon.",
         "The competition involves making one robot each for offense and defense, and competing for scores by throwing ping-pong balls into a goal on the field within a time limit.",
-        "I was in charge of designing and manufacturing the attack robot within my team.\nI used Autodesk Inventor Professional to create 3D models and implemented a catapult mechanism while checking for interference and size restrictions.",
+        "I am in charge of designing and manufacturing the attack robot within my team.\nI used Autodesk Inventor Professional to create 3D models and implemented a catapult mechanism while checking for interference and size restrictions.",
         "Below are the CAD model during design and the actual robot in action.",
       ],
       mediaGap: "20px",
-      githubUrl: "https://github.com/michihara213",
+      githubUrl: "https://github.com/michihara213/OtherProject/tree/main/Robocon",
       media: [
         {
           kind: "image",
