@@ -25,7 +25,9 @@ export function Hero({
           <span className="hero-roman"> {nameRoman}</span>
         </div>
 
-        <div className="hero-meta">{affiliation}</div>
+        <div className="hero-meta"style={{ whiteSpace: "pre-wrap" }}>
+          {affiliation}
+        </div>
 
         {oneLine ? <div className="hero-one-line">{oneLine}</div> : null}
       </div>

@@ -8,7 +8,9 @@ export function Timeline({ items }: { items: CareerItem[] }) {
           <div className="timeline-year">{item.period}</div>
           <div className="timeline-body">
             <div style={{ fontWeight: 600, color: "var(--text-main)" }}>{item.title}</div>
-            {item.detail ? <div>{item.detail}</div> : null}
+            {item.detail ? (
+              <div style={{ whiteSpace: "pre-wrap" }}>{item.detail}</div>
+            ) : null}
           </div>
         </div>
       ))}
