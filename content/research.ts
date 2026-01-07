@@ -100,7 +100,6 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
           "なお、判定の閾値については、複数のサンプル動画における比率の変動を確認し、最適な値を実験的に決定しました。",
         ],
         mediaGap: "20px",
-        githubUrl: "https://github.com/michihara213/EchoAnalysisProject/tree/main/lv_analysis",
         media: [
           {
             kind: "image",
@@ -141,8 +140,6 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
           "その結果、Average F1-score 0.912、Accuracy 0.925を達成し、本手法の有効性を確認しました。",
         ],
         mediaGap: "20px",
-        githubUrl:
-          "https://github.com/michihara213/EchoAnalysisProject/tree/main/loop_analysis",
         media: [
           {
             kind: "image",
@@ -270,8 +267,6 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
           "その結果、F1-score 0.964、Accuracy 0.973を達成し、本手法の有効性を確認しました。",
         ],
         mediaGap: "20px",
-        githubUrl:
-          "https://github.com/michihara213/EchoAnalysisProject/tree/main/chordae_analysis",
         media: [
           {
             kind: "image",
@@ -370,7 +365,6 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
           "The threshold for judgment was determined experimentally by confirming the fluctuation of the ratio in multiple sample videos.",
         ],
         mediaGap: "20px",
-        githubUrl: "https://github.com/michihara213/EchoAnalysisProject/tree/main/lv_analysis",
         media: [
           {
             kind: "image",
@@ -411,8 +405,6 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
           "As a result, I achieved an Average F1-score of 0.912 and Accuracy of 0.925, confirming the effectiveness of this method.",
         ],
         mediaGap: "20px",
-        githubUrl:
-          "https://github.com/michihara213/EchoAnalysisProject/tree/main/loop_analysis",
         media: [
           {
             kind: "image",
@@ -540,8 +532,6 @@ export const researchData: Record<"ja" | "en", ResearchPageContent> = {
           "As a result, I achieved an F1-score of 0.964 and Accuracy of 0.973, confirming the effectiveness of this method.",
         ],
         mediaGap: "20px",
-        githubUrl:
-          "https://github.com/michihara213/EchoAnalysisProject/tree/main/chordae_analysis",
         media: [
           {
             kind: "image",
